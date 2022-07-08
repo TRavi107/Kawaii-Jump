@@ -27,13 +27,11 @@ public class CharacterController : MonoBehaviour
         {
             return;
         }
-        if (UIManager.instance.activeUIPanel.uiPanelType == UIPanelType.mainmenu)
+        if (UIManager.instance.activeUIPanel.uiPanelType == UIPanelType.howToplay)
         {
             if (Input.GetMouseButtonDown(0))
             {
-                UIManager.instance.SwitchCanvas(UIPanelType.mainGame);
-                GameManager.instance.StartGame();
-                GameManager.instance.handImg.SetActive(false);
+                PlayGame();
             }
         }
         else if (Input.GetMouseButtonDown(0))
@@ -53,6 +51,13 @@ public class CharacterController : MonoBehaviour
                 LastClicked = Time.time;
             }
         }
+    }
+
+    public void PlayGame()
+    {
+        UIManager.instance.SwitchCanvas(UIPanelType.mainGame);
+        GameManager.instance.StartGame();
+        GameManager.instance.handImg.SetActive(false);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

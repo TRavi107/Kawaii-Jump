@@ -29,8 +29,8 @@ public class soundManager : MonoBehaviour
 
     public List<AudioClip> uiSounds;
     public AudioClip pauseResumeSound;
-    [HideInInspector]public float backGroundAudioVolume;
-    [HideInInspector]public float soundeffectVolume; 
+    public float backGroundAudioVolume;
+    public float soundeffectVolume; 
     public float OriginalbackGroundAudioVolume;
     public float OriginalsoundeffectVolume;
 

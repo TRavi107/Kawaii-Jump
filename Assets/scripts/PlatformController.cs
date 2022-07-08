@@ -56,18 +56,18 @@ public class PlatformController : MonoBehaviour
 
     void Update()
     {
-        if (transform.position.x <= GameManager.instance.spawnPosLeft.position.x)
+        if (transform.position.x < GameManager.instance.spawnPosLeft.position.x)
         {
             GameManager.instance.SpawnPlatform(new(GameManager.instance.spawnPosRight.position.x, transform.position.y));
             Destroy(this.gameObject);
         }
-        else if (transform.position.x >= GameManager.instance.spawnPosRight.position.x)
+        else if (transform.position.x > GameManager.instance.spawnPosRight.position.x)
         {
             GameManager.instance.SpawnPlatform(new(GameManager.instance.spawnPosLeft.position.x,transform.position.y));
             Destroy(this.gameObject);
 
         }
-        else if (transform.position.y <= GameManager.instance.deletePosBottom.position.y)
+        else if (transform.position.y < GameManager.instance.deletePosBottom.position.y)
         {
             GameManager.instance.SpawnPlatform(new(transform.position.x, GameManager.instance.spawnPosTop.position.y));
             Destroy(this.gameObject);

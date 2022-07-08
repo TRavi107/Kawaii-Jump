@@ -28,7 +28,7 @@ public class UIManager : MonoBehaviour
         SwitchCanvas(uiPanels[0].uiPanelType);
         OnMusicVolumeChanged();
         OnSoundVolumeChanged();
-        if (soundManager.instance.backGroundAudioVolume == 0)
+        if (soundManager.instance.OriginalbackGroundAudioVolume == 0)
         {
             EnableDisableMusicBtns(musicBtn, 0.5f);
         }
@@ -36,7 +36,7 @@ public class UIManager : MonoBehaviour
         {
             EnableDisableMusicBtns(musicBtn, 1f);
         }
-        if (soundManager.instance.soundeffectVolume == 0)
+        if (soundManager.instance.OriginalsoundeffectVolume == 0)
         {
             EnableDisableMusicBtns(soundBtn, 0.5f);
         }

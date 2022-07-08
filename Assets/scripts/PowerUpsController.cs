@@ -6,6 +6,7 @@ public enum PowerUpType
 {
     Spike,
     Time,
+    Danger,
 }
 public class PowerUpsController : MonoBehaviour
 {

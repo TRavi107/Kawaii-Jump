@@ -100,13 +100,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myrenderer: {fileID: 2424745453117347375}
-  crackChance: 10
+  crackChance: 20
+  dangerPlatChance: 10
   powerUpSpawnChance: 20
   powerUps:
   - {fileID: 2298313784554245349, guid: f25e73f965309e74d81112faacbf2d80, type: 3}
   - {fileID: 5053397107053151373, guid: b8e599de5c9fedd49a3c55b278e40650, type: 3}
+  dangerPow: {fileID: 8630825066781893066, guid: c220ff70fef04614484c6800593f068c, type: 3}
   spawnPowerUps: 0
   isCracked: 0
+  isDanger: 0
 --- !u!61 &5069565829247799421
 BoxCollider2D:
   m_ObjectHideFlags: 0

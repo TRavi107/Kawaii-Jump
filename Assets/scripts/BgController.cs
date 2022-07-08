@@ -15,18 +15,18 @@ public class BgController : MonoBehaviour
     {
         if (transform.position.x < GameManager.instance.bgspawnPosLeft.position.x)
         {
-            GameManager.instance.spawnBgCloud(GameManager.instance.bgspawnPosRight.position);
+            GameManager.instance.spawnBgCloud(new(GameManager.instance.bgspawnPosRight.position.x, transform.position.y));
             Destroy(this.gameObject);
         }
         else if (transform.position.x > GameManager.instance.bgspawnPosRight.position.x)
         {
-            GameManager.instance.spawnBgCloud(GameManager.instance.bgspawnPosLeft.position);
+            GameManager.instance.spawnBgCloud(new(GameManager.instance.bgspawnPosLeft.position.x, transform.position.y));
             Destroy(this.gameObject);
 
         }
         else if (transform.position.y < GameManager.instance.bgdeletePosBottom.position.y)
         {
-            GameManager.instance.spawnBgCloud(GameManager.instance.bgspawnPosTop.position);
+            GameManager.instance.spawnBgCloud(new(transform.position.x, GameManager.instance.bgspawnPosTop.position.y));
             Destroy(this.gameObject);
 
         }

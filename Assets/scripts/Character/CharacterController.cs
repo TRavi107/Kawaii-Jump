@@ -13,6 +13,7 @@ public class CharacterController : MonoBehaviour
     private bool isDead;
 
     public bool deadlyEffect;
+    public Vector3 destination;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +27,16 @@ public class CharacterController : MonoBehaviour
         {
             return;
         }
-        if (Input.GetMouseButtonDown(0))
+        if (UIManager.instance.activeUIPanel.uiPanelType == UIPanelType.mainmenu)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                UIManager.instance.SwitchCanvas(UIPanelType.mainGame);
+                GameManager.instance.StartGame();
+                GameManager.instance.handImg.SetActive(false);
+            }
+        }
+        else if (Input.GetMouseButtonDown(0))
         {
             if ((Time.time - LastClicked) > ClickInterval)
             {
@@ -53,18 +63,29 @@ public class CharacterController : MonoBehaviour
             PowerUpsController powerController = collision.GetComponent<PowerUpsController>();
             if (powerController.myType == PowerUpType.Spike)
             {
-                myanimator.SetTrigger("death");
+                
+                myanimator.SetTrigger("fallDeath");
                 isDead = true;
             }
             else if(powerController.myType == PowerUpType.Time)
             {
                 Destroy(collision.gameObject);
                 //add time;
-                GameManager.instance.AddTime(10);
+                GameManager.instance.AddTime(5);
+                soundManager.instance.PlaySound(SoundType.powerUpSound);
             }
             
         }
     }
+    public void SetPos()
+    {
+        //myanimator.enabled=false;
+        //transform.position = destination;
+        ////myanimator.enabled=true;
+        //myanimator.speed = 1;
+        //myanimator.applyRootMotion = true;
+    }
+
     public void DeathAnim()
     {
         if (isDead)
@@ -72,7 +93,13 @@ public class CharacterController : MonoBehaviour
         myanimator.SetTrigger("death");
         isDead = true;
     }
+    public void FallDeath()
+    {
+        if (isDead)
+            return;
+        myanimator.SetTrigger("fallDeath");
+        isDead = true;
+    }
 
-
-
+    
 }

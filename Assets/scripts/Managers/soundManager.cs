@@ -12,6 +12,9 @@ public enum SoundType
     backgroundSound,
     uiSound,
     pauseSound,
+    jumpSound,
+    powerUpSound,
+    deathSound,
 }
 
 
@@ -20,6 +23,9 @@ public class soundManager : MonoBehaviour
     public static soundManager instance;
     public List<AudioClip> mainMenuSound;
     public List<AudioClip> backGroundSound;
+    public List<AudioClip> jumpSound;
+    public List<AudioClip> powerUpSound;
+    public List<AudioClip> deathSound;
 
     public List<AudioClip> uiSounds;
     public AudioClip pauseResumeSound;
@@ -46,8 +52,8 @@ public class soundManager : MonoBehaviour
     {
         PlaySound(SoundType.backgroundSound);
 
-        MusicVolumeChanged(backGroundAudioVolume);
-        SoundVolumeChanged(soundeffectVolume);
+        MusicVolumeChanged(OriginalbackGroundAudioVolume);
+        SoundVolumeChanged(OriginalsoundeffectVolume);
         ScoreAPI.GameStart((bool s) => {
         });
     }
@@ -118,6 +124,20 @@ public class soundManager : MonoBehaviour
                 break;
             case SoundType.pauseSound:
                 clip = pauseResumeSound;
+                break;
+
+            case SoundType.jumpSound:
+                soundIndex = Random.Range(0, jumpSound.Count);
+                clip = jumpSound[soundIndex];
+                break;
+            case SoundType.powerUpSound:
+                soundIndex = Random.Range(0, powerUpSound.Count);
+                clip = powerUpSound[soundIndex];
+                break;
+
+            case SoundType.deathSound:
+                soundIndex = Random.Range(0, deathSound.Count);
+                clip = deathSound[soundIndex];
                 break;
             default:
                 break;

@@ -7,6 +7,7 @@ using RamailoGames;
 
 public class GameManager : MonoBehaviour
 {
+    public CharacterController character;
     #region Singleton
     public static GameManager instance;
 
@@ -15,8 +16,7 @@ public class GameManager : MonoBehaviour
         if (instance == null)
             instance = this;
 
-        int themeIndex = Random.Range(0, gameThemes.Length);
-        activeTheme = gameThemes[themeIndex].themeType;
+        
     }
 
     #endregion
@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
     public Transform bgspawnPosRight;
     public Transform bgspawnPosTop;
     public Transform bgdeletePosBottom;
+    public GameObject handImg;
 
     #endregion
 
@@ -67,7 +68,7 @@ public class GameManager : MonoBehaviour
 
     bool paused;
     float startTime;
-
+    bool gameStarted;
 
 
     #endregion
@@ -83,8 +84,11 @@ public class GameManager : MonoBehaviour
         score = 0;
         ScoreAPI.GameStart((bool s) => {
         });
+        int themeIndex = Random.Range(0, gameThemes.Length);
+        activeTheme = gameThemes[themeIndex].themeType;
+        //activeTheme = ThemeType.snow;
         float startY = -3;
-        for (int i = 0; i < 12; i++)
+        for (int i = 0; i < 16; i++)
         {
             float offset;
             if (i % 2 == 0)
@@ -102,10 +106,25 @@ public class GameManager : MonoBehaviour
         }
         for (int i = -3; i <= 3; i++)
         {
-            GameObject cloud = Instantiate(cloudPrefab, new(4 * i, 6.88f), Quaternion.identity);
+            GameObject cloud = Instantiate(cloudPrefab, new(4 * i, 5.88f), Quaternion.identity);
             cloud.GetComponent<SpriteRenderer>().sprite = GetCurrentTheme().cloud;
         }
+        for (int i = -3; i <= 3; i++)
+        {
+            GameObject cloud = Instantiate(cloudPrefab, new(4 * i, 5.88f+4), Quaternion.identity);
+            cloud.GetComponent<SpriteRenderer>().sprite = GetCurrentTheme().cloud;
+        }
+        for (int i = -3; i <= 3; i++)
+        {
+            GameObject cloud = Instantiate(cloudPrefab, new(4 * i, 5.88f + 8), Quaternion.identity);
+            cloud.GetComponent<SpriteRenderer>().sprite = GetCurrentTheme().cloud;
+        }
+    }
+    public void StartGame()
+    {
+        gameStarted = true;
         remainingTime = maxRemainingTime;
+
     }
     public void spawnBgCloud(Vector2 pos)
     {
@@ -124,8 +143,10 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (!gameStarted)
+            return;
         remainingTime -= Time.deltaTime;
-        clockUiTransform.position = new(clockUiTransform.position.x-(clockMaxpos.position.x-clockminPos.position.x)/maxRemainingTime *Time.deltaTime, clockUiTransform.transform.position.y);
+        clockUiTransform.position = new(clockUiTransform.position.x-(clockMaxpos.position.x-clockminPos.position.x)/maxRemainingTime *Time.deltaTime, clockUiTransform.transform.position.y,0);
         if (remainingTime <= 0)
             GameOver();
     }
@@ -149,6 +170,10 @@ public class GameManager : MonoBehaviour
         Debug.LogWarning("something wrong");
         return null;
     }
+    public GameTheme GetOtherTheme()
+    {
+        return gameThemes[Random.Range(0, gameThemes.Length)];
+    }
     public void PauseGame()
     {
         
@@ -167,6 +192,8 @@ public class GameManager : MonoBehaviour
         score += amount ;
         gamePlayScoreText.text = score.ToString();
         setHighScore(gamePlayhighscoreText);
+        character.SetPos();
+
     }
 
     #endregion
@@ -179,10 +206,10 @@ public class GameManager : MonoBehaviour
         if (remainingTime > maxRemainingTime)
         {
             remainingTime = maxRemainingTime;
-            clockUiTransform = clockMaxpos;
+            clockUiTransform.position = clockMaxpos.position;
             return;
         }
-        clockUiTransform.position = new(clockUiTransform.position.x + (clockMaxpos.position.x - clockminPos.position.x) / maxRemainingTime * amount, clockUiTransform.transform.position.y); ;
+        clockUiTransform.position = new(clockUiTransform.position.x + (clockMaxpos.position.x - clockminPos.position.x) / maxRemainingTime * amount, clockUiTransform.transform.position.y,0); ;
 
     }
     public void GameOver()

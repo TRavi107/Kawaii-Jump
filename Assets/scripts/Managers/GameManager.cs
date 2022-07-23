@@ -138,6 +138,7 @@ public class GameManager : MonoBehaviour
         {
             GameObject plat = Instantiate(PlatformPrefab, new(pos.x+i,pos.y), Quaternion.identity);
             plat.GetComponent<PlatformController>().spawnPowerUps = false;
+
         }
     }
 
